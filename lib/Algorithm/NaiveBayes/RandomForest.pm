@@ -9,16 +9,10 @@ $VERSION = '0.0.1';
 use Algorithm::NaiveBayes;
 
 use Storable ();
-use Data::Dumper;
 use Parallel::ForkManager;
 use POSIX::AtFork;
 
 POSIX::AtFork->add_to_child(sub { srand });
-
-use constant DEBUG => 1;
-
-use Data::Dumper;
-
 
 sub new {
     my $class = shift;
