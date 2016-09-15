@@ -5,7 +5,10 @@ Algorithm::NaiveBayes::RandomForest - RandomForest using Algorithm::NaiveBayes
 # SYNOPSIS
 
     use Algorithm::NaiveBayes::RandomForest;
-    my $nb = Algorithm::NaiveBayes::RandomForest->new(purge => 0);
+
+    # 'max_processes' assignment child processes.
+    # This number is used as the number of trees.
+    my $nb = Algorithm::NaiveBayes::RandomForest->new(purge => 0, max_processes => 4);
     
     # If you have 'save_file', you can use this method
     # my $nb = Algorithm::NaiveBayes::RandomForest->new->restore_state('save_file'); 
