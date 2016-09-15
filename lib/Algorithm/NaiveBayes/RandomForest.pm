@@ -157,7 +157,7 @@ Algorithm::NaiveBayes::RandomForest - RandomForest using Algorithm::NaiveBayes
 
 =head1 DESCRIPTION
 
-Algorithm::NaiveBayes::RandomForest is inheritance by L<Algorithm::NaiveBayes>.
+Algorithm::NaiveBayes::RandomForest is inheritance by L<Algorithm::NaiveBayes>.  
 So, you can use same method as Algorithm::NaiveBayes.
 
 =head1 SEE ALSO

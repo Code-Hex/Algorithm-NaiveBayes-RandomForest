@@ -39,7 +39,7 @@ Algorithm::NaiveBayes::RandomForest - RandomForest using Algorithm::NaiveBayes
 
 # DESCRIPTION
 
-Algorithm::NaiveBayes::RandomForest is inheritance by [Algorithm::NaiveBayes](https://metacpan.org/pod/Algorithm::NaiveBayes).
+Algorithm::NaiveBayes::RandomForest is inheritance by [Algorithm::NaiveBayes](https://metacpan.org/pod/Algorithm::NaiveBayes).  
 So, you can use same method as Algorithm::NaiveBayes.
 
 # SEE ALSO
