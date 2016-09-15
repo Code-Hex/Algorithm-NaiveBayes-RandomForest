@@ -33,7 +33,7 @@ sub new {
     $self->{model} = [];
     $self->{pm} = Parallel::ForkManager->new($max_processes);
     $self->{version} = $VERSION;
-    $self;
+    return $self;
 }
 
 sub save_state {
@@ -49,8 +49,6 @@ sub restore_state {
     return $self;
 }
 
-# train(HASH)
-# HASH = {label => "~", trees => N, data => data}
 sub train {
     my $self = shift;
     my $sampling = $self->_bs_sampling;
@@ -67,8 +65,9 @@ sub train {
 sub predict {
     my ($self, %params) = @_;
     my $newattrs = $params{attributes} or die "Missing 'attributes' parameter for predict()";
-
+    
     my $result = {};
+
     for my $model (@{ $self->{model} }) {
         my $predict = $self->do_predict($model, $newattrs);
         $result->{$_} += $predict->{$_} for keys %$predict;
@@ -84,6 +83,7 @@ sub _bs_sampling {
     my $self = shift;
 
     my $dataset = $self->{training_data}{attributes};
+
     my $keys = [ keys %$dataset ];
     my $T = $#$keys;
     my $trees = $self->{max_processes};
@@ -99,9 +99,9 @@ sub _bs_sampling {
     foreach my $t (1..$trees) {
         $self->{pm}->start and next;
         my $dict = +{};
-        my $randkeys = [ map { $keys->[int rand($T + 1)] } 0 .. $T + 1 ];
-         # make dataset
-        $dict->{$_} = $dataset->{$_} for @$randkeys;
+        my @randkeys = map { $keys->[int rand($T + 1)] } 0 .. $T + 1;
+        # make dataset
+        $dict->{attributes}{$_} = $dataset->{$_} for @randkeys;
         $dict->{labels} = $self->{training_data}{labels};
 
         $self->{pm}->finish(0, $dict);
@@ -111,8 +111,6 @@ sub _bs_sampling {
     return $sampling;
 }
 
-# __PACKAGE__->meta->make_immutable();
-
 1;
 __END__
 
@@ -120,26 +118,62 @@ __END__
 
 =head1 NAME
 
-Algorithm::NaiveBayes::RandomForest - It's new $module
+Algorithm::NaiveBayes::RandomForest - RandomForest using Algorithm::NaiveBayes
 
 =head1 SYNOPSIS
 
     use Algorithm::NaiveBayes::RandomForest;
+    my $nb = Algorithm::NaiveBayes::RandomForest->new(purge => 0);
+    
+    # If you have 'save_file', you can use this method
+    # my $nb = Algorithm::NaiveBayes::RandomForest->new->restore_state('save_file'); 
+
+    $nb->add_instance(
+        attributes => {
+            Like => 0.875,
+            Nice => 0.322,
+            Thanks   => 0.3234
+        },
+        label => 'positive',
+    );
+    $nb->add_instance(
+        attributes => {
+            Unlike => 0.583,
+            Bad => 0.294
+        },
+        label => 'negative',
+    );
+
+    $nb->train;
+
+    use Data::Dumper;
+    say Dumper $nb->predict(
+        attributes => {
+            Unlike => 0.332,
+            Like   => 0.553,
+            Nice   => 0.872
+        }
+    );
 
 =head1 DESCRIPTION
 
-Algorithm::NaiveBayes::RandomForest is ...
+Algorithm::NaiveBayes::RandomForest is inheritance by L<Algorithm::NaiveBayes>.
+So, you can use same method as Algorithm::NaiveBayes.
+
+=head1 SEE ALSO
+
+L<Algorithm::NaiveBayes>
 
 =head1 LICENSE
 
-Copyright (C) K.
+Copyright (C) Kei Kamikawa(Code-Hex).
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 =head1 AUTHOR
 
-K E<lt>x00.x7f@gmail.comE<gt>
+Kei Kamikawa E<lt>x00.x7f@gmail.comE<gt>
 
 =cut
 

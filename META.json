@@ -1,7 +1,7 @@
 {
-   "abstract" : "It's new $module",
+   "abstract" : "RandomForest using Algorithm::NaiveBayes",
    "author" : [
-      "K <x00.x7f@gmail.com>"
+      "Kei Kamikawa <x00.x7f@gmail.com>"
    ],
    "dynamic_config" : 0,
    "generated_by" : "Minilla/v3.0.4, CPAN::Meta::Converter version 2.150005",
@@ -42,6 +42,9 @@
       },
       "runtime" : {
          "requires" : {
+            "Algorithm::NaiveBayes" : "0",
+            "POSIX::AtFork" : "0",
+            "Parallel::ForkManager" : "0",
             "perl" : "5.008001"
          }
       },
@@ -52,6 +55,17 @@
       }
    },
    "release_status" : "unstable",
-   "version" : "0.01",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/Code-Hex/Algorithm-NaiveBayes-RandomForest/issues"
+      },
+      "homepage" : "https://github.com/Code-Hex/Algorithm-NaiveBayes-RandomForest",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/Code-Hex/Algorithm-NaiveBayes-RandomForest.git",
+         "web" : "https://github.com/Code-Hex/Algorithm-NaiveBayes-RandomForest"
+      }
+   },
+   "version" : "0.0.1",
    "x_serialization_backend" : "JSON::PP version 2.27300"
 }
